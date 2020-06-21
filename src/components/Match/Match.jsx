@@ -43,10 +43,9 @@ const Match = ({ match, handleBets, handleSubmit }) => {
   }
 
   // time for fixture
-  // const timeToMatch = moment(data.matches.utcDate).fromNow();
-
-  console.log(match);
+  const timeToMatch = moment(match.match.utcDate).fromNow();
   const { homeTeam, awayTeam, status, season } = match.match;
+
   return (
     <div className={styles.container}>
       <Card>
@@ -58,7 +57,7 @@ const Match = ({ match, handleBets, handleSubmit }) => {
                 {season.currentMatchday}
               </Typography>
             </CardContent>
-            {/* <CardContent>{timeToMatch}</CardContent> */}
+            <CardContent>{timeToMatch}</CardContent>
           </Grid>
 
           <Grid item xs={2}>

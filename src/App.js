@@ -5,10 +5,7 @@ import styles from "./App.module.css";
 
 import { getUpcomingMatch } from "./api";
 
-import Firebase from "./components/Firebase/firebase";
-
-// Get a reference to the database service
-// var database = firebase.database();
+import firebase from "./firebase";
 
 export default class App extends Component {
   state = {
@@ -20,25 +17,43 @@ export default class App extends Component {
   async componentDidMount() {
     const upcomingMatch = await getUpcomingMatch();
     this.setState({ match: upcomingMatch, isFetching: false });
-    console.log(this.state.match);
+    // console.log(this.state.match);
   }
 
-  stateHandler(obj) {
-    this.setState(
-      (state) => ({ bets: [...state.bets, obj] }),
-      console.log(this.state)
-    );
-  }
-
-  handleSubmit(e) {
-    const { home, away, name } = this.state.bets[0];
-    Firebase.database()
+  storeInFirebase() {
+    const { name, home, away } = this.state.bets[0];
+    firebase
+      .database()
       .ref("users/" + name)
       .set({
         username: name,
         home: home,
         away: away,
       });
+    this.setState({ bets: [] });
+  }
+
+  stateHandler(obj) {
+    this.setState(
+      (state) => ({ bets: [...state.bets, obj] }),
+      () => this.storeInFirebase()
+    );
+  }
+
+  handleSubmit() {
+    console.log(this.state.bets);
+    // const { home, away, name } = this.state.bets[0];
+
+    // firebase.child("bets").push(this.state.bets, (err) => console.log(err));
+
+    // firebase
+    //   .database()
+    //   .ref("users/" + name)
+    //   .set({
+    //     username: name,
+    //     home: home,
+    //     away: away,
+    //   });
   }
 
   render() {
@@ -54,7 +69,7 @@ export default class App extends Component {
         <Match
           match={match}
           handleBets={(obj) => this.stateHandler(obj)}
-          handleSubmit={() => this.handleSubmit}
+          handleSubmit={() => this.handleSubmit()}
         />
         {/* <Matches /> <br /> */}
       </div>
