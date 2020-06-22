@@ -3,39 +3,51 @@ import React, { Component } from "react";
 import { Match, Matches, Nav } from "./components";
 import styles from "./App.module.css";
 
-import { getUpcomingMatch } from "./api";
+import { getUpcomingMatches } from "./api";
 
-import firebase from "./firebase";
+import db from "./firebase";
 
 export default class App extends Component {
   state = {
-    match: {},
+    matches: {},
     bets: [],
     isFetching: true,
   };
 
   async componentDidMount() {
-    const upcomingMatch = await getUpcomingMatch();
-    this.setState({ match: upcomingMatch, isFetching: false });
+    const upcomingMatches = await getUpcomingMatches();
+    this.setState({ matches: upcomingMatches, isFetching: false });
     // console.log(this.state.match);
   }
 
   storeInFirebase() {
-    const { name, home, away } = this.state.bets[0];
-    firebase
-      .database()
-      .ref("users/" + name)
-      .set({
+    console.log(this.state.bets);
+    const { name } = this.state;
+    // const { id, home, away } = this.state.bets[0];
+    // firebase
+    //   .database()
+    //   .ref("users/" + name)
+    //   .set({
+    //     username: name,
+    //     home: home,
+    //     away: away,
+    //   });
+
+    // using firestore
+    db.collection("users")
+      .doc(name)
+      .update({
         username: name,
-        home: home,
-        away: away,
-      });
-    this.setState({ bets: [] });
+        bets: this.state.bets,
+      })
+      .then((doc) => console.log("added", doc.id))
+      .catch((err) => console.log(err));
+    // this.setState({ bets: [] });
   }
 
-  stateHandler(obj) {
+  stateHandler({ name, id, home, away }) {
     this.setState(
-      (state) => ({ bets: [...state.bets, obj] }),
+      (state) => ({ name: name, bets: [...state.bets, { id, home, away }] }),
       () => this.storeInFirebase()
     );
   }
@@ -61,16 +73,21 @@ export default class App extends Component {
       //waits for data to be fetched
       return <h1> Please wait </h1>;
     }
-    const { match } = this.state;
+    const { matches } = this.state;
     return (
       <div className={styles.container}>
         {/* <Nav /> */}
         {/* need to handle bets  */}
-        <Match
-          match={match}
+        <Matches
+          matches={matches}
           handleBets={(obj) => this.stateHandler(obj)}
           handleSubmit={() => this.handleSubmit()}
         />
+        {/* <Match
+          match={match}
+          handleBets={(obj) => this.stateHandler(obj)}
+          handleSubmit={() => this.handleSubmit()}
+        /> */}
         {/* <Matches /> <br /> */}
       </div>
     );

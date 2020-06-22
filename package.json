@@ -37,6 +37,6 @@
     ]
   },
   "devDependencies": {
-    "firebase": "^7.15.3"
+    "firebase": "7.15.3"
   }
 }

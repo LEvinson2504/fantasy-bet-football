@@ -33,7 +33,7 @@ const Match = ({ match, handleBets, handleSubmit }) => {
 
   function handleClick() {
     // needs work here
-    handleBets({ name, home, away });
+    handleBets({ name, id, home, away });
     handleSubmit();
     setHome("");
     setName("");
@@ -43,8 +43,8 @@ const Match = ({ match, handleBets, handleSubmit }) => {
   }
 
   // time for fixture
-  const timeToMatch = moment(match.match.utcDate).fromNow();
-  const { homeTeam, awayTeam, status, season } = match.match;
+  const timeToMatch = moment(match.utcDate).fromNow();
+  const { homeTeam, awayTeam, status, season, id } = match;
 
   return (
     <div className={styles.container}>
