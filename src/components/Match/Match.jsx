@@ -13,6 +13,9 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
+import { getTeamEmblemUrl } from "../../api";
+
+const TeamEmblem = ({ id }) => <img src={getTeamEmblemUrl(id)} alt="team" />;
 
 const Match = ({ match, handleBets, handleSubmit }) => {
   const [home, setHome] = React.useState(0);
@@ -53,6 +56,7 @@ const Match = ({ match, handleBets, handleSubmit }) => {
           <Grid item xs={12}>
             <CardContent>
               <Typography variant="h4">
+                {/* <TeamEmblem id={homeTeam.id} /> */}
                 {homeTeam.name} vs {awayTeam.name} ({status}) - wk
                 {season.currentMatchday}
               </Typography>
