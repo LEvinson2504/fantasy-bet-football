@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { getTeamEmblemUrl } from "../../api";
 
-const TeamEmblem = ({ id }) => <img src={getTeamEmblemUrl(id)} alt="team" />;
+// const TeamEmblem = ({ id }) => <img src={getTeamEmblemUrl(id)} alt="team" />;
 
 const Match = ({ match, handleBets, handleSubmit }) => {
   const [home, setHome] = React.useState(0);
