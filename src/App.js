@@ -79,6 +79,7 @@ export default class App extends Component {
   }
 
   handleSubmit() {
+    //delete this function?
     console.log(this.state.bets);
     // const { home, away, name } = this.state.bets[0];
 
