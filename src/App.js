@@ -42,7 +42,7 @@ export default class App extends Component {
       .update({
         username: name,
         bets: this.state.bets,
-        points: 2,
+        points: 0,
       })
       .then((doc) => console.log("added", doc.id))
       .catch((err) => console.log(err));
