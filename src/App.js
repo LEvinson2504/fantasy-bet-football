@@ -11,15 +11,15 @@ export default class App extends Component {
   state = {
     matches: {},
     bets: [],
-    leader: "",
+    users: "",
     isFetching: true,
   };
 
   async componentDidMount() {
     const upcomingMatches = await getUpcomingMatches();
-    const leader = await this.getLeaderboard()
-    console.log(leader);
-    this.setState({ matches: upcomingMatches, isFetching: false, leader: leader });
+    const users = await this.getLeaderboard()
+    console.log(users);
+    this.setState({ matches: upcomingMatches, isFetching: false, users: users });
     // console.log(this.state.match);
   }
 
@@ -60,19 +60,22 @@ export default class App extends Component {
   async getLeaderboard() {
     // let usernamePromise = await db.collection("users").doc("glynel").get().data();
     // console.log("doc data: ", usernamePromise.username);
-    let username = "";
-    await db.collection("users").doc("glynel").get().then(function (doc) {
-      if (doc.exists) {
-        username = doc.data().username
-        console.log("Document data:", username);
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
-    return username;
+    let users = [];
+    await db.collection("users").get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        console.log(`doc data : ${doc.data().username} - ${doc.data().bets[0].home}`);
+        users.push({
+          "name": doc.data().username,
+          "points": doc.data().points,
+          "home": doc.data().bets[0].home,
+          "away": doc.data().bets[0].away
+        });
+      })
+    })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+    return users;
   }
 
   handleSubmit() {
@@ -99,7 +102,16 @@ export default class App extends Component {
     const { matches } = this.state;
     return (
       <div>
-        <h1> <span role="img"> 👑 </span>Leader: {this.state.leader} - 2pts</h1>
+        <div className={styles.leaderboard}>
+          <h1 className={styles.names}>Scores </h1>
+          {
+            this.state.users.map(user => (
+              <h1 className={styles.names}> {user.points === 2 && <span role="img" aria-label="crown emoji">👑 </span>} {user.name} - {user.points}pts bets {user.home}-{user.away}</h1>
+            ))
+          }
+        </div>
+
+        {/* <h1> <span role="img">👑 </span>Leader: {this.state.leader} - 2pts</h1> */}
         <div className={styles.container}>
           {/* <Nav /> */}
           {/* need to handle bets  */}

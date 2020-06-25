@@ -7,3 +7,14 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.leaderboard {
+  background-color: azure;
+  padding: 5px;
+}
+
+.names {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
