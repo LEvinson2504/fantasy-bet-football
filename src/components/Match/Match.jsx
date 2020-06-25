@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 
 import styles from "./Match.module.css";
@@ -15,7 +15,17 @@ import {
 } from "@material-ui/core";
 import { getTeamEmblemUrl } from "../../api";
 
-// const TeamEmblem = ({ id }) => <img src={getTeamEmblemUrl(id)} alt="team" />;
+// const TeamEmblem = ({ id }) => {
+//   const [url, setUrl] = useState("");
+//   useEffect(
+//     () => async () =>
+//       getTeamEmblemUrl(id).then((fetchedUrl) => setUrl(fetchedUrl)),
+//     [url, id]
+//   );
+//   return <img src={url} alt="team" />;
+// };
+// let emblemUrl = "";
+// getTeamEmblemUrl(64).then((url) => (emblemUrl = url));
 
 const Match = ({ match, handleBets, handleSubmit }) => {
   const [home, setHome] = React.useState(0);
@@ -57,6 +67,7 @@ const Match = ({ match, handleBets, handleSubmit }) => {
             <CardContent>
               <Typography variant="h4">
                 {/* <TeamEmblem id={homeTeam.id} /> */}
+                {/* <img src={emblemUrl} alt="" /> */}
                 {homeTeam.name} vs {awayTeam.name} ({status}) - wk
                 {season.currentMatchday}
               </Typography>

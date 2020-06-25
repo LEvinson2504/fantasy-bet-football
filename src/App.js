@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Match, Matches, Nav } from "./components";
+import { Match, Matches, Nav, LeaderBoard } from "./components";
 import styles from "./App.module.css";
 
 import { getUpcomingMatches } from "./api";
@@ -11,12 +11,15 @@ export default class App extends Component {
   state = {
     matches: {},
     bets: [],
+    leader: "",
     isFetching: true,
   };
 
   async componentDidMount() {
     const upcomingMatches = await getUpcomingMatches();
-    this.setState({ matches: upcomingMatches, isFetching: false });
+    const leader = await this.getLeaderboard()
+    console.log(leader);
+    this.setState({ matches: upcomingMatches, isFetching: false, leader: leader });
     // console.log(this.state.match);
   }
 
@@ -39,10 +42,12 @@ export default class App extends Component {
       .update({
         username: name,
         bets: this.state.bets,
+        points: 2,
       })
       .then((doc) => console.log("added", doc.id))
       .catch((err) => console.log(err));
     // this.setState({ bets: [] });
+
   }
 
   stateHandler({ name, id, home, away }) {
@@ -50,6 +55,24 @@ export default class App extends Component {
       (state) => ({ name: name, bets: [...state.bets, { id, home, away }] }),
       () => this.storeInFirebase()
     );
+  }
+
+  async getLeaderboard() {
+    // let usernamePromise = await db.collection("users").doc("glynel").get().data();
+    // console.log("doc data: ", usernamePromise.username);
+    let username = "";
+    await db.collection("users").doc("glynel").get().then(function (doc) {
+      if (doc.exists) {
+        username = doc.data().username
+        console.log("Document data:", username);
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+    return username;
   }
 
   handleSubmit() {
@@ -75,20 +98,24 @@ export default class App extends Component {
     }
     const { matches } = this.state;
     return (
-      <div className={styles.container}>
-        {/* <Nav /> */}
-        {/* need to handle bets  */}
-        <Matches
-          matches={matches}
-          handleBets={(obj) => this.stateHandler(obj)}
-          handleSubmit={() => this.handleSubmit()}
-        />
-        {/* <Match
+      <div>
+        <h1> <span role="img"> 👑 </span>Leader: {this.state.leader} - 2pts</h1>
+        <div className={styles.container}>
+          {/* <Nav /> */}
+          {/* need to handle bets  */}
+          <Matches
+            matches={matches}
+            handleBets={(obj) => this.stateHandler(obj)}
+            handleSubmit={() => this.handleSubmit()}
+          />
+          {/* <Match
           match={match}
           handleBets={(obj) => this.stateHandler(obj)}
           handleSubmit={() => this.handleSubmit()}
         /> */}
-        {/* <Matches /> <br /> */}
+          {/* <Matches /> <br /> */}
+        </div>
+        {/* <LeaderBoard getData={() => this.getLeaderboard()} /> */}
       </div>
     );
   }

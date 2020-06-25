@@ -6,7 +6,7 @@ const Matches = ({ matches, handleBets, handleSubmit }) => {
   // const { matches } = matches;
   return (
     <div>
-      {matches.matches.map((match) => (
+      {matches.someMatches.map((match) => (
         <Match
           key={match.id}
           match={match}
@@ -14,7 +14,7 @@ const Matches = ({ matches, handleBets, handleSubmit }) => {
           handleSubmit={handleSubmit}
         />
       ))}
-      <h1> match</h1>
+      {/* <h1> match</h1> */}
       {/* <Match /> */}
     </div>
   );
