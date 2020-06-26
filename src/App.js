@@ -66,8 +66,10 @@ export default class App extends Component {
         users.push({
           "name": doc.data().username,
           "points": doc.data().points,
-          "home": doc.data().bets[0].home,
-          "away": doc.data().bets[0].away
+          "homeName": doc.data().bets[0].home.name,
+          "homeGoals": doc.data().bets[0].home.goals,
+          "awayName": doc.data().bets[0].away.name,
+          "awayGoals": doc.data().bets[0].away.goals,
         });
       })
     })

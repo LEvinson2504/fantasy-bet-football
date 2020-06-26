@@ -28,16 +28,17 @@ import { getTeamEmblemUrl } from "../../api";
 // getTeamEmblemUrl(64).then((url) => (emblemUrl = url));
 
 const Match = ({ match, handleBets, handleSubmit }) => {
-  const [home, setHome] = React.useState(0);
-  const [away, setAway] = React.useState(0);
+  const [home, setHome] = React.useState({ goals: 0, name: "" });
+  const [away, setAway] = React.useState({ goals: 0, name: "" });
   const [name, setName] = React.useState("");
 
   function handleHomeChange(e) {
-    setHome(e.target.value);
+    setHome({ goals: e.target.value, name: homeTeam });
+    console.log(home);
   }
 
   function handleAwayChange(e) {
-    setAway(e.target.value);
+    setAway({ goals: e.target.value, name: awayTeam });
   }
 
   function handleNameChange(e) {
@@ -80,7 +81,7 @@ const Match = ({ match, handleBets, handleSubmit }) => {
               <InputLabel id="home-team-bet">home team</InputLabel>
               <Select
                 labelId="home-team-bet"
-                value={home}
+                value={home.goals}
                 onChange={handleHomeChange}>
                 <MenuItem value={0}>0</MenuItem>
                 <MenuItem value={1}>1</MenuItem>
@@ -98,7 +99,7 @@ const Match = ({ match, handleBets, handleSubmit }) => {
               <InputLabel id="away-team-bet">away team</InputLabel>
               <Select
                 labelId="away-team-bet"
-                value={away}
+                value={away.goals}
                 onChange={handleAwayChange}>
                 <MenuItem value={0}>0</MenuItem>
                 <MenuItem value={1}>1</MenuItem>

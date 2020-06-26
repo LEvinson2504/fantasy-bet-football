@@ -11,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 // need to work it out here
 const LeaderBoard = ({ users }) => {
   // let username = await getData();
-  console.log(`leaderboard : ${users}`);
+  // console.log(`leaderboard : ${users.levinson}`);
   return (
     <TableContainer component={Paper}>
       <Table size="small" aria-label="a dense table" className={styles.table}>
@@ -20,6 +20,7 @@ const LeaderBoard = ({ users }) => {
             <TableCell>Names</TableCell>
             <TableCell align="right">Points</TableCell>
             <TableCell align="right">Previous bet</TableCell>
+            <TableCell align="right">Match</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -35,7 +36,10 @@ const LeaderBoard = ({ users }) => {
               </TableCell>
               <TableCell align="right">{user.points}</TableCell>
               <TableCell align="right">
-                {user.home} - {user.away}
+                {user.homeGoals} - {user.awayGoals}
+              </TableCell>
+              <TableCell align="right">
+                {user.homeName.name} v {user.awayName.name}
               </TableCell>
             </TableRow>
           ))}
