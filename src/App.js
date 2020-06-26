@@ -17,7 +17,7 @@ export default class App extends Component {
 
   async componentDidMount() {
     const upcomingMatches = await getUpcomingMatches();
-    const users = await this.getLeaderboard()
+    const users = await this.getLeaderboard();
     console.log(users);
     this.setState({ matches: upcomingMatches, isFetching: false, users: users });
     // console.log(this.state.match);
@@ -42,7 +42,6 @@ export default class App extends Component {
       .update({
         username: name,
         bets: this.state.bets,
-        points: 0,
       })
       .then((doc) => console.log("added", doc.id))
       .catch((err) => console.log(err));
@@ -80,7 +79,7 @@ export default class App extends Component {
 
   handleSubmit() {
     //delete this function?
-    console.log(this.state.bets);
+    console.log(this.state.users);
     // const { home, away, name } = this.state.bets[0];
 
     // firebase.child("bets").push(this.state.bets, (err) => console.log(err));
@@ -103,15 +102,7 @@ export default class App extends Component {
     const { matches } = this.state;
     return (
       <div>
-        <div className={styles.leaderboard}>
-          <h1 className={styles.names}>Scores </h1>
-          {
-            this.state.users.map(user => (
-              <h1 className={styles.names}> {user.points === 2 && <span role="img" aria-label="crown emoji">👑 </span>} {user.name} - {user.points}pts bets {user.home}-{user.away}</h1>
-            ))
-          }
-        </div>
-
+        <LeaderBoard users={this.state.users} />
         {/* <h1> <span role="img">👑 </span>Leader: {this.state.leader} - 2pts</h1> */}
         <div className={styles.container}>
           {/* <Nav /> */}
@@ -128,7 +119,6 @@ export default class App extends Component {
         /> */}
           {/* <Matches /> <br /> */}
         </div>
-        {/* <LeaderBoard getData={() => this.getLeaderboard()} /> */}
       </div>
     );
   }
