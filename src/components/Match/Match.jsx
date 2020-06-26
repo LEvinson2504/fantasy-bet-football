@@ -28,10 +28,11 @@ import { getTeamEmblemUrl } from "../../api";
 // getTeamEmblemUrl(64).then((url) => (emblemUrl = url));
 
 const Match = ({ match, handleBets, handleSubmit }) => {
-  const [home, setHome] = React.useState({ goals: 0, name: "" });
-  const [away, setAway] = React.useState({ goals: 0, name: "" });
+  const [home, setHome] = React.useState({ goals: "", name: "" });
+  const [away, setAway] = React.useState({ goals: "", name: "" });
   const [name, setName] = React.useState("");
-
+  // destructure match
+  const { homeTeam, awayTeam, status, season, id } = match;
   function handleHomeChange(e) {
     setHome({ goals: e.target.value, name: homeTeam });
     console.log(home);
@@ -58,7 +59,6 @@ const Match = ({ match, handleBets, handleSubmit }) => {
 
   // time for fixture
   const timeToMatch = moment(match.utcDate).fromNow();
-  const { homeTeam, awayTeam, status, season, id } = match;
 
   return (
     <div className={styles.container}>
