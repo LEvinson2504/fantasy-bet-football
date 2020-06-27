@@ -21,9 +21,9 @@ require("firebase/firestore");
 //required for sideeffects
 
 firebase.initializeApp({
-    apiKey: "AIzaSyAZ-vMZkB-kcZ9mBWi0pBbXdBCXQSgPD7c",
-    authDomain: "fantasy-bet-football-c2676.firebaseapp.com",
-    databaseURL: "https://fantasy-bet-football-c2676.firebaseio.com",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASE_URL,
     projectId: "fantasy-bet-football-c2676",
     storageBucket: "fantasy-bet-football-c2676.appspot.com",
     messagingSenderId: "699773943172",

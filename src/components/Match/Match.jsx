@@ -79,7 +79,8 @@ const Match = ({ match, handleBets, handleSubmit }) => {
             <CardContent>
               <Typography variant="h4">
                 {homeTeam.name} &nbsp;
-                <TeamEmblem id={homeTeam.id} /> &nbsp; vs &nbsp;
+                <TeamEmblem id={homeTeam.id} />
+                &nbsp; vs &nbsp;
                 <TeamEmblem id={awayTeam.id} /> &nbsp;
                 {awayTeam.name}({status}) - wk
                 {season.currentMatchday}

@@ -6,7 +6,7 @@ export const getUpcomingMatches = async () => {
     try {
         const { data: { matches } } = await axios.get(url, {
             headers: {
-                'X-Auth-Token': '984a4fda42cd4820be8c73fba4f53e7a',
+                'X-Auth-Token': process.env.REACT_APP_X_AUTH_TOKEN,
 
             }
         });
@@ -23,7 +23,7 @@ export const getTeamEmblemUrl = async (id) => {
     try {
         const { data: { crestUrl } } = await axios.get(url, {
             headers: {
-                'X-Auth-Token': '984a4fda42cd4820be8c73fba4f53e7a',
+                'X-Auth-Token': process.env.REACT_APP_X_AUTH_TOKEN,
             }
         })
         console.log("url: ", crestUrl);
@@ -38,7 +38,7 @@ export const getMatchDetails = async (id) => {
     try {
         const { data: { match } } = await axios.get(url, {
             headers: {
-                'X-Auth-Token': '984a4fda42cd4820be8c73fba4f53e7a',
+                'X-Auth-Token': process.env.REACT_APP_X_AUTH_TOKEN,
             }
         });
         // console.log("matches: ", { someMatches })
