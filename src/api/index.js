@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const url = "https://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED";
 
 export const getUpcomingMatches = async () => {
+    const url = "https://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED";
     try {
         const { data: { matches } } = await axios.get(url, {
             headers: {
@@ -32,4 +32,20 @@ export const getTeamEmblemUrl = async (id) => {
         console.log(error);
     }
 }
+
+export const getMatchDetails = async (id) => {
+    const url = `https://cors-anywhere.herokuapp.com/https://api.football-data.org/v2/matches/${id}`;
+    try {
+        const { data: { match } } = await axios.get(url, {
+            headers: {
+                'X-Auth-Token': '984a4fda42cd4820be8c73fba4f53e7a',
+            }
+        });
+        // console.log("matches: ", { someMatches })
+        return match;
+    } catch (error) {
+
+    }
+}
+
 

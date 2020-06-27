@@ -27,6 +27,17 @@ import { getTeamEmblemUrl } from "../../api";
 // let emblemUrl = "";
 // getTeamEmblemUrl(64).then((url) => (emblemUrl = url));
 
+const TeamEmblem = ({ id }) => {
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    async function getData() {
+      getTeamEmblemUrl(id).then((fetchedUrl) => setUrl(fetchedUrl));
+    }
+    getData();
+  }, [url, id]);
+  return <img src={url} alt="team" width="30" />;
+};
+
 const Match = ({ match, handleBets, handleSubmit }) => {
   const [home, setHome] = React.useState({ goals: "", name: "" });
   const [away, setAway] = React.useState({ goals: "", name: "" });
@@ -67,9 +78,9 @@ const Match = ({ match, handleBets, handleSubmit }) => {
           <Grid item xs={12}>
             <CardContent>
               <Typography variant="h4">
-                {/* <TeamEmblem id={homeTeam.id} /> */}
-                {/* <img src={emblemUrl} alt="" /> */}
-                {homeTeam.name} vs {awayTeam.name} ({status}) - wk
+                <TeamEmblem id={homeTeam.id} />
+                {homeTeam.name} vs {awayTeam.name}
+                <TeamEmblem id={awayTeam.id} /> ({status}) - wk
                 {season.currentMatchday}
               </Typography>
             </CardContent>

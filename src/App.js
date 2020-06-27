@@ -3,10 +3,11 @@ import React, { Component } from "react";
 import { Match, Matches, Nav, LeaderBoard } from "./components";
 import styles from "./App.module.css";
 
-import { getUpcomingMatches } from "./api";
+import { getUpcomingMatches, getMatchDetails } from "./api";
 
 import db from "./firebase";
-
+const firebase = require("firebase");
+require("firebase/firestore");
 export default class App extends Component {
   state = {
     matches: {},
@@ -18,9 +19,49 @@ export default class App extends Component {
   async componentDidMount() {
     const upcomingMatches = await getUpcomingMatches();
     const users = await this.getLeaderboard();
-    console.log(users);
+    // for the matches stored check: 
+    // console.log("match:", match);
     this.setState({ matches: upcomingMatches, isFetching: false, users: users });
     // console.log(this.state.match);
+  }
+
+  checkWinners() {
+    // check matches in database
+    getMatchDetails(64)
+      .then(match => {
+        // if a match has status finished, get the result
+        if (match.status === "FINISHED") {
+          console.log(match.score.fullTime.homeTeam);
+          console.log(match);
+          const trueHomeScore = match.score.fullTime.homeTeam;
+          const trueAwayScore = match.score.fullTime.awayTeam;
+          // compare the fetched result with every user
+          db.collection("users").get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              const userHome = doc.data().bets[0].home.goals;
+              const userAway = doc.data().bets[0].away.goals;
+              if ((trueHomeScore === userHome) && (trueAwayScore === userAway)) {
+                // update score
+                db.collection("users")
+                  .doc(doc.data().username)
+                  .update({
+                    points: firebase.firestore.FieldValue.increment(1)
+                  })
+              }
+              // console.log(`doc data : ${doc.data().username} - ${doc.data().bets[0].home}`);
+
+            })
+          })
+        }
+      })
+    // console.log(getMatchDetails(64));
+    // if a match has status scheduled do nothing
+
+
+
+    // if the result is same point + 1
+
+    // else do nothing
   }
 
   storeInFirebase() {
@@ -47,6 +88,11 @@ export default class App extends Component {
       .catch((err) => console.log(err));
     // this.setState({ bets: [] });
 
+    // store matches
+    db.collection("matches")
+      .doc("upcoming")
+      .update(this.state.matches)
+      .then(doc => console.log(`match updated- ${doc}`))
   }
 
   stateHandler({ name, id, home, away }) {
@@ -62,7 +108,7 @@ export default class App extends Component {
     let users = [];
     await db.collection("users").get().then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
-        console.log(`doc data : ${doc.data().username} - ${doc.data().bets[0].home}`);
+        // console.log(`doc data : ${doc.data().username} - ${doc.data().bets[0].home}`);
         users.push({
           "name": doc.data().username,
           "points": doc.data().points,
