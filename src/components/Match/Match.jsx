@@ -35,7 +35,7 @@ const TeamEmblem = ({ id }) => {
     }
     getData();
   }, [url, id]);
-  return <img src={url} alt="team" width="30" />;
+  return <img src={url} alt="team" width="30" margin="5" />;
 };
 
 const Match = ({ match, handleBets, handleSubmit }) => {
@@ -78,9 +78,10 @@ const Match = ({ match, handleBets, handleSubmit }) => {
           <Grid item xs={12}>
             <CardContent>
               <Typography variant="h4">
-                <TeamEmblem id={homeTeam.id} />
-                {homeTeam.name} vs {awayTeam.name}
-                <TeamEmblem id={awayTeam.id} /> ({status}) - wk
+                {homeTeam.name} &nbsp;
+                <TeamEmblem id={homeTeam.id} /> &nbsp; vs &nbsp;
+                <TeamEmblem id={awayTeam.id} /> &nbsp;
+                {awayTeam.name}({status}) - wk
                 {season.currentMatchday}
               </Typography>
             </CardContent>
