@@ -34,7 +34,7 @@ const TeamEmblem = ({ id }) => {
       getTeamEmblemUrl(id).then((fetchedUrl) => setUrl(fetchedUrl));
     }
     getData();
-  }, [url, id]);
+  }, []);
   return <img src={url} alt="team" width="30" margin="5" />;
 };
 

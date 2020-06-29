@@ -89,10 +89,17 @@ export default class App extends Component {
     // this.setState({ bets: [] });
 
     // store matches
-    db.collection("matches")
-      .doc("upcoming")
-      .update(this.state.matches)
-      .then(doc => console.log(`match updated- ${doc}`))
+    // db.collection("matches")
+    //   .doc("upcoming")
+    //   .update(this.state.matches)
+    //   .then(doc => console.log(`match updated- ${doc}`))
+
+    // read matches document
+    // db.collection("matches").get().then(function (querySnapshot) {
+    //   querySnapshot.forEach(function (doc) {
+    //     console.log("doc data:", doc.data());
+    //   })
+    // })
   }
 
   stateHandler({ name, id, home, away }) {
