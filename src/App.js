@@ -80,10 +80,10 @@ export default class App extends Component {
     // using firestore
     db.collection("users")
       .doc(name)
-      .update({
+      .set({
         username: name,
         bets: this.state.bets,
-      })
+      }, {merge: true})
       .then((doc) => console.log("added", doc.id))
       .catch((err) => console.log(err));
     // this.setState({ bets: [] });

@@ -36,7 +36,7 @@ const LeaderBoard = ({ users }) => {
               </TableCell>
               <TableCell align="right">{user.points}</TableCell>
               <TableCell align="right">
-                {user.homeGoals} - {user.awayGoals}
+                {user.homeGoals} - {user.awayGoals} 
               </TableCell>
               <TableCell align="right">
                 {user.homeName.name} v {user.awayName.name}
