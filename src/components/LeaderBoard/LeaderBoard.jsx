@@ -11,9 +11,11 @@ import Paper from "@material-ui/core/Paper";
 // need to work it out here
 const LeaderBoard = ({ users }) => {
   // let username = await getData();
-  // console.log(`leaderboard : ${users.levinson}`);
+  users.sort((a, b) => b.points - a.points);
+  // console.log(`leaderboard : ${users}`);
   return (
     <TableContainer component={Paper}>
+      <h1> Leaderboard </h1>
       <Table size="small" aria-label="a dense table" className={styles.table}>
         <TableHead>
           <TableRow>
@@ -36,7 +38,7 @@ const LeaderBoard = ({ users }) => {
               </TableCell>
               <TableCell align="right">{user.points}</TableCell>
               <TableCell align="right">
-                {user.homeGoals} - {user.awayGoals} 
+                {user.homeGoals} - {user.awayGoals}
               </TableCell>
               <TableCell align="right">
                 {user.homeName.name} v {user.awayName.name}
