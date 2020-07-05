@@ -44,7 +44,7 @@ export const getMatchDetails = async (id) => {
         // console.log("matches: ", { someMatches })
         return match;
     } catch (error) {
-
+        console.log(error);
     }
 }
 

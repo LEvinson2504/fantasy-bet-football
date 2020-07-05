@@ -20,8 +20,6 @@ export default class App extends Component {
   async componentDidMount() {
     const upcomingMatches = await getUpcomingMatches();
     const users = await this.getLeaderboard();
-    // TODO automated poinst system
-    this.checkWinners();
     // for the matches stored check:
     // console.log("match:", match);
     this.setState({
@@ -30,23 +28,35 @@ export default class App extends Component {
       users: users,
     });
     // console.log(this.state.match);
+    // TODO automated poinst system
+    this.checkWinners();
   }
 
   async checkWinners() {
+    // store scheduled matches in db if they don't exist
+    console.log("matchers: ", this.state.matches.someMatches);
+    this.state.matches.someMatches.forEach((match) => {
+      db.collection("matches").doc(String(match.id)).set(match);
+    });
+
     // function to delete the match from database:
     // use query to match the id of match to delete
 
-    // (function deleteMatchFromDB(id) {
-    //   db.collection("matches")
-    //     .where("upcoming.someMatches[0].id", "==", id)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       querySnapshot.forEach((doc) => {
-    //         console.log("match to delete: ", doc.data());
-    //       });
-    //     });
-    //   console.log("match is here");
-    // })(264659);
+    function deleteMatchFromDB(id) {
+      db.collection("matches")
+        .where("id", "==", id)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data());
+            db.collection("matches")
+              .doc(String(doc.data().id))
+              .delete()
+              .then(() => console.log("deleted now?"));
+          });
+        });
+      console.log("match is here");
+    }
 
     // check matches in database
     function getStoredMatchId() {
@@ -55,9 +65,11 @@ export default class App extends Component {
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
-            // console.log("db matches: ", doc.data())
-            let storedMatches = doc.data().someMatches;
-            storedMatches.forEach((match) => matches.push(match.id));
+            // console.log("db matches: ", doc.data());
+            // TODO - read data properly
+            matches.push(String(doc.data().id));
+            // let storedMatches = doc.data().someMatches;
+            // storedMatches.forEach((match) => matches.push(match.id));
           });
         });
       return matches;
@@ -65,6 +77,7 @@ export default class App extends Component {
 
     // getMatchDetails(64)
     const storedMatchIds = await getStoredMatchId();
+    console.log("show match", storedMatchIds);
     storedMatchIds.forEach((match) =>
       getMatchDetails(match).then((match) => {
         // if a match has status finished, get the result
@@ -94,6 +107,7 @@ export default class App extends Component {
             });
 
           // delete match from database;
+          deleteMatchFromDB(match);
         }
       })
     );
