@@ -106,6 +106,7 @@ export default class App extends Component {
             });
 
           // delete match from database;
+          console.log("to delete :", match);
           deleteMatchFromDB(match);
         }
       })
