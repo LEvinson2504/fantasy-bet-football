@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Match, Matches, Nav, LeaderBoard } from "./components";
+import { Matches, Nav, LeaderBoard } from "./components";
 import styles from "./App.module.css";
 
 import { getUpcomingMatches, getMatchDetails } from "./api";
