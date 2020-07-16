@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Matches, Nav, LeaderBoard } from "./components";
+import { Matches, Nav, LeaderBoard, News } from "./components";
 import styles from "./App.module.css";
 
 import { getUpcomingMatches, getMatchDetails } from "./api";
@@ -233,6 +233,7 @@ export default class App extends Component {
     return (
       <div>
         <Nav />
+        <News />
         <LeaderBoard users={this.state.users} />{" "}
         {/* <h1> <span role="img">👑 </span>Leader: {this.state.leader} - 2pts</h1> */}{" "}
         <div className={styles.container}>

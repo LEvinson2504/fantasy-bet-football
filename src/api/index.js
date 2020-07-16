@@ -48,4 +48,14 @@ export const getMatchDetails = async (id) => {
     }
 }
 
+export const getLatesNews = async () => {
+    const url = `https://cors-anywhere.herokuapp.com/https://levinson-fantasy-football.herokuapp.com/news`;
+    try {
+        const { data } = await axios.get(url, {});
+        // console.log("news: ", data)
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
