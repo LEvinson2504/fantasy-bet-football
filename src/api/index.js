@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 export const getUpcomingMatches = async () => {
-    const url = "https://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED";
+    const url = "https://cors-anywhere.herokuapp.com/https://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED";
     try {
         const { data: { matches } } = await axios.get(url, {
             headers: {
