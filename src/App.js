@@ -6,6 +6,7 @@ import styles from "./App.module.css";
 import { getUpcomingMatches, getMatchDetails } from "./api";
 
 import db from "./firebase";
+import { queryByRole } from "@testing-library/react";
 const firebase = require("firebase");
 require("firebase/firestore");
 export default class App extends Component {
@@ -232,11 +233,11 @@ export default class App extends Component {
     const { matches } = this.state;
     return (
       <div>
-        <Nav />
-        <News />
         <LeaderBoard users={this.state.users} />{" "}
         {/* <h1> <span role="img">👑 </span>Leader: {this.state.leader} - 2pts</h1> */}{" "}
         <div className={styles.container}>
+          {" "}
+          {/* <Nav /> */} {/* need to handle bets  */}{" "}
           <Matches
             matches={matches}
             handleBets={(obj) => this.stateHandler(obj)}
@@ -249,7 +250,6 @@ export default class App extends Component {
                   /> */}{" "}
           {/* <Matches /> <br /> */}{" "}
         </div>{" "}
-        <h3> created by Levinson</h3>
       </div>
     );
   }
