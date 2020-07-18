@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Matches, Nav, LeaderBoard, News } from "./components";
 import styles from "./App.module.css";
-
+import { Grid } from "@material-ui/core";
 import { getUpcomingMatches, getMatchDetails } from "./api";
 
 import db from "./firebase";
@@ -233,22 +233,25 @@ export default class App extends Component {
     return (
       <div>
         <Nav />
-        <News />
-        <LeaderBoard users={this.state.users} />{" "}
-        {/* <h1> <span role="img">👑 </span>Leader: {this.state.leader} - 2pts</h1> */}{" "}
-        <div className={styles.container}>
-          <Matches
-            matches={matches}
-            handleBets={(obj) => this.stateHandler(obj)}
-            handleSubmit={() => this.handleSubmit()}
-          />{" "}
-          {/* <Match
-                    match={match}
-                    handleBets={(obj) => this.stateHandler(obj)}
-                    handleSubmit={() => this.handleSubmit()}
-                  /> */}{" "}
-          {/* <Matches /> <br /> */}{" "}
-        </div>{" "}
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4}>
+            <LeaderBoard users={this.state.users} />
+          </Grid>
+
+          <Grid item xs={12} sm={8}>
+            <div className={styles.container}>
+              <Matches
+                matches={matches}
+                handleBets={(obj) => this.stateHandler(obj)}
+                handleSubmit={() => this.handleSubmit()}
+              />
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <News />
+          </Grid>
+        </Grid>
         <h3> created by Levinson</h3>
       </div>
     );
