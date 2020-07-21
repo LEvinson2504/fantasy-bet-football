@@ -26,7 +26,7 @@ export const getTeamEmblemUrl = async (id) => {
                 'X-Auth-Token': process.env.REACT_APP_X_AUTH_TOKEN,
             }
         })
-        console.log("url: ", crestUrl);
+        // console.log("url: ", crestUrl);
         return crestUrl;
     } catch (error) {
         console.log(error);
@@ -59,3 +59,20 @@ export const getLatesNews = async () => {
     }
 }
 
+
+export const getUpcomingClMatches = async () => {
+    const url = "https://cors-anywhere.herokuapp.com/https://api.football-data.org/v2/competitions/CL/matches?status=SCHEDULED";
+    try {
+        const { data: { matches } } = await axios.get(url, {
+            headers: {
+                'X-Auth-Token': process.env.REACT_APP_X_AUTH_TOKEN,
+
+            }
+        });
+        let someMatches = matches.slice(0, 3);
+        console.log("CL matches: ", { someMatches })
+        return { someMatches };
+    } catch (error) {
+
+    }
+}
