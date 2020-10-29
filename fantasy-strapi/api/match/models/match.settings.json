@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "matches",
+  "info": {
+    "name": "Match"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "matchId": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "matchDay": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "SCHEDULED",
+        "FINISHED",
+        "LIVE"
+      ],
+      "default": "SCHEDULED",
+      "required": true
+    },
+    "homeTeam": {
+      "type": "json",
+      "required": true
+    },
+    "awayTeam": {
+      "type": "json",
+      "required": true
+    },
+    "score": {
+      "type": "json",
+      "required": false
+    }
+  }
+}

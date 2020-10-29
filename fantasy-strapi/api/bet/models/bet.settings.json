@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bets",
+  "info": {
+    "name": "Bet"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "home": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    },
+    "away": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    },
+    "matchId": {
+      "type": "integer",
+      "required": true
+    },
+    "pending": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "userId": {
+      "type": "integer",
+      "required": true
+    }
+  }
+}
